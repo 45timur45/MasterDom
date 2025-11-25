@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МастерДом - Строительная компания</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
+    <style>
+        /* Общие стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Навигация */
+        header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .nav-links a.active {
+            background-color: #e74c3c;
+        }
+
+        /* Главный баннер */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('static/images/hero-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 8rem 0;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #e74c3c;
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Секции */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 3px;
+            background: #3498db;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* О компании */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-image {
+            flex: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Галерея работ */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .work-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .work-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .work-image {
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .work-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .work-card:hover .work-image img {
+            transform: scale(1.1);
+        }
+
+        .work-info {
+            padding: 1.5rem;
+        }
+
+        .work-info h3 {
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        /* Демонстрация */
+        .demo-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+        }
+
+        .video-wrapper video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-description {
+            padding: 1.5rem;
+        }
+
+        /* Работники */
+        .team {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .employee-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .employee-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .employee-image {
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .employee-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .employee-info {
+            padding: 1.5rem;
+        }
+
+        .employee-info h3 {
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .employee-info .position {
+            color: #e74c3c;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .employee-details {
+            text-align: left;
+            margin-top: 1rem;
+        }
+
+        .employee-details p {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .employee-details i {
+            margin-right: 10px;
+            color: #3498db;
+            width: 20px;
+        }
+
+        /* Футер */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 3rem 0 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background: #3498db;
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-column p, .footer-column a {
+            color: #bdc3c7;
+            margin-bottom: 0.8rem;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: #3498db;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #34495e;
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-content {
+                flex-direction: column;
+            }
+
+            .section {
+                padding: 3rem 0;
+            }
+        }
+
+        /* Иконки (используем Font Awesome) */
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+    </style>
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-hard-hat"></i>
+                    <span>МастерДом</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home" class="active">Главная</a></li>
+                    <li><a href="#about">О компании</a></li>
+                    <li><a href="#works">Наши работы</a></li>
+                    <li><a href="#demo">Демонстрация</a></li>
+                    <li><a href="#employees">Наши работники</a></li>
+                    <li><a href="#contact">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Главный баннер -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Строительная компания "МастерДом"</h1>
+            <p>Мы строим будущее, создавая комфорт и уют сегодня. Качество, надежность и профессионализм - наши главные принципы.</p>
+            <a href="#about" class="btn">Узнать больше</a>
+        </div>
+    </section>
+
+    <!-- О компании -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>О нашей компании</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Строительная компания "МастерДом" работает на рынке Томска более 10 лет. За это время мы реализовали сотни проектов различной сложности - от небольших частных домов до многоэтажных жилых комплексов.</p>
+                    <p>Наша команда состоит из высококвалифицированных специалистов с многолетним опытом работы. Мы используем только современные технологии и материалы, что позволяет нам гарантировать качество и долговечность наших построек.</p>
+                    <p>Мы ценим доверие наших клиентов и стремимся к долгосрочному сотрудничеству. Наш подход к работе сочетает в себе индивидуальный подход к каждому проекту и строгое соблюдение сроков.</p>
+                    <a href="#contact" class="btn">Связаться с нами</a>
+                </div>
+                <div class="about-image">
+                    <img src="static/images/about.jpg" alt="Строительная площадка">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Наши работы -->
+    <section class="section" id="works">
+        <div class="container">
+            <div class="section-title">
+                <h2>Наши работы</h2>
+            </div>
+            <div class="gallery">
+                <div class="work-card">
+                    <div class="work-image">
+                        <img src="static/images/work1.jpg" alt="Жилой комплекс">
+                    </div>
+                    <div class="work-info">
+                        <h3>Жилой комплекс "Северный"</h3>
+                        <p>Многоэтажный жилой комплекс с современной инфраструктурой и благоустроенной территорией.</p>
+                    </div>
+                </div>
+                <div class="work-card">
+                    <div class="work-image">
+                        <img src="static/images/work2.jpg" alt="Загородный дом">
+                    </div>
+                    <div class="work-info">
+                        <h3>Загородный дом в Томской области</h3>
+                        <p>Элитный загородный дом площадью 350 м² с бассейном и ландшафтным дизайном.</p>
+                    </div>
+                </div>
+                <div class="work-card">
+                    <div class="work-image">
+                        <img src="static/images/work3.jpg" alt="Офисное здание">
+                    </div>
+                    <div class="work-info">
+                        <h3>Офисный центр "Бизнес-Плаза"</h3>
+                        <p>Современное офисное здание класса А с подземной парковкой и конференц-залами.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Демонстрация работы -->
+    <section class="section" id="demo">
+        <div class="container">
+            <div class="section-title">
+                <h2>Демонстрация работы</h2>
+            </div>
+            <div class="demo-container">
+                <div class="video-wrapper">
+                    <video controls>
+                        <source src="static/videos/demo.mp4" type="video/mp4">
+                        Ваш браузер не поддерживает видео тег.
+                    </video>
+                </div>
+                <div class="video-description">
+                    <h3>Процесс строительства жилого дома</h3>
+                    <p>В этом видео мы показываем полный цикл строительства частного дома - от закладки фундамента до внутренней отделки. Обратите внимание на тщательность выполнения работ и использование современных технологий.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Наши работники -->
+    <section class="section" id="employees">
+        <div class="container">
+            <div class="section-title">
+                <h2>Наши работники</h2>
+            </div>
+            <div class="team">
+                <div class="employee-card">
+                    <div class="employee-image">
+                        <img src="static/images/employee1.jpg" alt="Иван Петров">
+                    </div>
+                    <div class="employee-info">
+                        <h3>Иван Петров</h3>
+                        <p class="position">Главный инженер</p>
+                        <div class="employee-details">
+                            <p><i class="fas fa-birthday-cake"></i> Возраст: 42 года</p>
+                            <p><i class="fas fa-briefcase"></i> Опыт: 18 лет</p>
+                            <p><i class="fas fa-graduation-cap"></i> Образование: ТГАСУ</p>
+                            <p><i class="fas fa-tools"></i> Специализация: проектирование и управление строительством</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="employee-card">
+                    <div class="employee-image">
+                        <img src="static/images/employee2.jpg" alt="Сергей Иванов">
+                    </div>
+                    <div class="employee-info">
+                        <h3>Сергей Иванов</h3>
+                        <p class="position">Прораб</p>
+                        <div class="employee-details">
+                            <p><i class="fas fa-birthday-cake"></i> Возраст: 38 лет</p>
+                            <p><i class="fas fa-briefcase"></i> Опыт: 15 лет</p>
+                            <p><i class="fas fa-graduation-cap"></i> Образование: ТГАСУ</p>
+                            <p><i class="fas fa-tools"></i> Специализация: организация строительных работ</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="employee-card">
+                    <div class="employee-image">
+                        <img src="static/images/employee3.jpg" alt="Алексей Смирнов">
+                    </div>
+                    <div class="employee-info">
+                        <h3>Алексей Смирнов</h3>
+                        <p class="position">Архитектор</p>
+                        <div class="employee-details">
+                            <p><i class="fas fa-birthday-cake"></i> Возраст: 35 лет</p>
+                            <p><i class="fas fa-briefcase"></i> Опыт: 10 лет</p>
+                            <p><i class="fas fa-graduation-cap"></i> Образование: ТГАСУ</p>
+                            <p><i class="fas fa-tools"></i> Специализация: архитектурное проектирование</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>О компании</h3>
+                    <p>Строительная компания "МастерДом" - надежный партнер в сфере строительства и ремонта. Мы работаем с 2010 года и заслужили доверие сотен клиентов.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> г. Томск, ул. Строителей, 15</p>
+                    <p><i class="fas fa-phone"></i> +7 (923) 538-36-23</p>
+                    <p><i class="fas fa-envelope"></i> info@masterdom.tomsk.ru</p>
+                    <p><i class="fas fa-clock"></i> Пн-Пт: 9:00-18:00</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Услуги</h3>
+                    <a href="#">Строительство домов</a>
+                    <a href="#">Ремонт помещений</a>
+                    <a href="#">Проектирование</a>
+                    <a href="#">Дизайн интерьеров</a>
+                    <a href="#">Консультации</a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Строительная компания "МастерДом". Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Плавная прокрутка к якорям
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Подсветка активного пункта меню при прокрутке
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if(pageYOffset >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
